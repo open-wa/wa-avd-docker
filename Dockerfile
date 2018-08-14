@@ -42,7 +42,6 @@ ENV PATH $PATH:$ANDROID_HOME/platform-tools
 # Export JAVA_HOME variable
 #ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-RUN touch /root/.android/repositories.cfg
 RUN rm -rf ${ANDROID_HOME}/tools
 RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
 	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
