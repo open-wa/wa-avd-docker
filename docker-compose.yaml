@@ -4,7 +4,7 @@ services:
         image: vm:latest
         build:
            context: ./
-           dockerfile: Dockerfile
+           dockerfile: Dockerfile.v2
         ports:
           - 6080:80
           - 5900:5900

@@ -1,0 +1,16 @@
+FROM dorowu/ubuntu-desktop-lxde-vnc:xenial
+
+RUN mkdir /app
+WORKDIR /app
+
+RUN add-apt-repository ppa:ubuntu-desktop/ubuntu-make
+RUN apt-get update
+RUN apt-get install -y ubuntu-make \
+	&& umake android --accept-license /app
+
+ARG ANDROID_AVD_HOME=/app/avd
+ENV ANDROID_AVD_HOME=${ANDROID_AVD_HOME}
+
+RUN mkdir ${ANDROID_AVD_HOME}
+
+COPY whatsapp.apk .
