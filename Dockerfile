@@ -2,33 +2,44 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc:xenial
 
 RUN mkdir /app
-RUN mkdir /app/avd
-RUN mkdir /app/android-sdk-linux
 WORKDIR /app
 
 COPY whatsapp.apk /app
 
-ENV HTTP_PASSWORD=$SELENIUM_VNC_PASSWORD
-ARG ANDROID_AVD_HOME=/app/avd
-ENV ANDROID_AVD_HOME=${ANDROID_AVD_HOME}
-ARG ANDROID_HOME=/app/android-sdk-linux
-ENV ANDROID_HOME=${ANDROID_HOME}
-ARG ANDROID_SDK_ROOT=${ANDROID_HOME}
-ENV ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}
+#ENV HTTP_PASSWORD=$SELENIUM_VNC_PASSWORD
+#ARG ANDROID_AVD_HOME=/app/avd
+#ENV ANDROID_AVD_HOME=${ANDROID_AVD_HOME}
+#ARG ANDROID_SDK_ROOT=${ANDROID_HOME}
+#ENV ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}
 
 RUN apt-get update \
 	&& apt-get install -y \
 	libgl1-mesa-dev \
 	wget \
-	openjdk-8-jdk \
 	unzip
 #	v4l2loopback
-# android-sdk
+
+RUN add-apt-repository ppa:webupd8team/java \
+	&& apt-get update \
+    && apt-get -y install oracle-java8-installer \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget -qO- http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | \
+	tar xvz -C /usr/local/ \
+	&& mv /usr/local/android-sdk-linux /usr/local/android-sdk \
+	&& chown -R root:root /usr/local/android-sdk/
+
+# Add android tools and platform tools to PATH
+ENV ANDROID_HOME /usr/local/android-sdk
+ENV PATH $PATH:$ANDROID_HOME/tools
+ENV PATH $PATH:$ANDROID_HOME/platform-tools
+
+# Export JAVA_HOME variable
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
 ADD post-build.sh .
 CMD ./post-build.sh
 
-#RUN wget http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
 #RUN tar -xvf android-sdk_r24.4.1-linux.tgz --directory /app
 #RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
 #RUN unzip -d /app
