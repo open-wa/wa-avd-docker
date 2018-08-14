@@ -42,10 +42,11 @@ RUN unzip sdk-tools-linux-4333796.zip -d ${ANDROID_HOME}
 RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86_64"
 
-RUN ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86_64" \
+RUN yes no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86_64" \
 	-p ${ANDROID_AVD_HOME} -c 2000M
 
-RUN yes no | ${ANDROID_HOME}/tools/emulator @Pixel -camera-back webcam1 -no-boot-anim -no-snapshot-load
+RUN ${ANDROID_HOME}/tools/emulator @Pixel 
+#-camera-back webcam1 -no-boot-anim -no-snapshot-load
 #RUN adb install /app/whatsapp.apk
 
 #RUN modprobe v4l2loopback
