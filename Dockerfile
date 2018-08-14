@@ -43,7 +43,7 @@ CMD ./post-build.sh
 #RUN ${ANDROID_HOME}/tools/bin/sdkmanager --list
 
 #RUN echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86_64" \
-	-p ${ANDROID_AVD_HOME} -c 2000M
+	#-p ${ANDROID_AVD_HOME} -c 2000M
 
 #RUN ${ANDROID_HOME}/tools/emulator @Pixel 
 #-camera-back webcam1 -no-boot-anim -no-snapshot-load
