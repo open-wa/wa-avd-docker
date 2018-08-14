@@ -28,7 +28,7 @@ RUN apt-get update \
 #    && apt-get -y install oracle-java8-installer oracle-java8-set-default \
 #    && rm -rf /var/lib/apt/lists/*
 
-RUN wget -qO- http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | \
+RUN wget -qO- http://dl.google.com/android/android-sdk_r23-linux.tgz | \
 	tar xvz -C /usr/local/ \
 	&& mv /usr/local/android-sdk-linux /usr/local/android-sdk \
 	&& chown -R root:root /usr/local/android-sdk/
@@ -36,6 +36,7 @@ RUN wget -qO- http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | \
 # Add android tools and platform tools to PATH
 ENV ANDROID_HOME /usr/local/android-sdk
 ENV PATH $PATH:$ANDROID_HOME/tools
+ENV PATH $PATH:$ANDROID_HOME/tools/bin
 ENV PATH $PATH:$ANDROID_HOME/platform-tools
 
 # Export JAVA_HOME variable
