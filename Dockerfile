@@ -45,7 +45,7 @@ RUN yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 RUN ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86_64" \
 	-p ${ANDROID_AVD_HOME} -c 2000M
 
-RUN ${ANDROID_HOME}/tools/emulator @Pixel -camera-back webcam1 -no-boot-anim -no-snapshot-load
+RUN yes no | ${ANDROID_HOME}/tools/emulator @Pixel -camera-back webcam1 -no-boot-anim -no-snapshot-load
 #RUN adb install /app/whatsapp.apk
 
 #RUN modprobe v4l2loopback
