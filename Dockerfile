@@ -46,7 +46,7 @@ RUN rm -rf ${ANDROID_HOME}/tools
 RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
 	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
 	&& yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
-	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86_64"
+	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86"
 
 #ADD post-build.sh .
 #RUN chmod +x ./post-build.sh
@@ -67,7 +67,7 @@ RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P
 #RUN ${ANDROID_HOME}/tools/android update sdk -y --no-ui -t 2
 #RUN ${ANDROID_HOME}/tools/bin/sdkmanager --list
 
-#RUN echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86_64" \
+#RUN echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86" \
 	#-p ${ANDROID_AVD_HOME} -c 2000M
 
 #RUN ${ANDROID_HOME}/tools/emulator @Pixel 
