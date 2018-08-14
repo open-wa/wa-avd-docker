@@ -5,7 +5,7 @@ do
     sleep 5 && echo "Waiting for volumes to be mounted..."
 done
 
-wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -p /app \
+wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
 	&& unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME}
 	&& yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86_64"
