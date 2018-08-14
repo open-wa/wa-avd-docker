@@ -19,9 +19,12 @@ RUN apt-get update \
 	unzip
 #	v4l2loopback
 
+RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections \
+	&& echo "debconf shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
+
 RUN add-apt-repository ppa:webupd8team/java \
 	&& apt-get update \
-    && apt-get -y install oracle-java8-installer \
+    && apt-get -y install oracle-java8-installer oracle-java8-set-default \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -qO- http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz | \
@@ -35,10 +38,15 @@ ENV PATH $PATH:$ANDROID_HOME/tools
 ENV PATH $PATH:$ANDROID_HOME/platform-tools
 
 # Export JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
-ADD post-build.sh .
-CMD ./post-build.sh
+RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
+	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
+	&& yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
+	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86_64"
+
+#ADD post-build.sh .
+#CMD ./post-build.sh
 
 #RUN tar -xvf android-sdk_r24.4.1-linux.tgz --directory /app
 #RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
