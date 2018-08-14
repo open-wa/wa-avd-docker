@@ -47,8 +47,8 @@ RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P
 	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
 	&& yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
 	"build-tools;28.0.2" "sources;android-25" "platform-tools" "platforms;android-25" "system-images;android-25;google_apis;armeabi-v7a" \
-	&& yes no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-25;google_apis;armeabi-v7a" -c 2000M
-
+	&& ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-25;google_apis;armeabi-v7a" -c 2000M
+#yes no | 
 #ADD post-build.sh .
 #RUN chmod +x ./post-build.sh
 #CMD ./post-build.sh
