@@ -6,6 +6,7 @@ if [ ! -e /dev/kvm ]; then
     mknod /dev/kvm c 10 $(grep '\<kvm\>' /proc/misc | cut -f 1 -d' ')
 fi
 
+# Create Pixel AVD, if it doesn't already exist
 ${ANDROID_HOME}/tools/bin/avdmanager list avd | grep 'Pixel' &> /dev/null
 if ! [ $? == 0 ]; then
     echo "Creating Pixel AVD..."
@@ -14,6 +15,8 @@ else
     echo "Pixel AVD already exists"
 fi
 
+# Start Android emulator and install WhatsApp
+# TODO: use xdg autostart
 export ANDROID_AVD_HOME=/root/.android/avd ANDROID_SDK_HOME=/root/.android HOME=/root DISPLAY=:1.0 \
     && xhost +local:docker \
     && xhost +local:root \

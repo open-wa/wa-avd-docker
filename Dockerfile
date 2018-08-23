@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY whatsapp.apk /app
 
+# Install tools and JDK
 RUN apt-get update \
 	&& apt-get install -y \
 	libgl1-mesa-dev \
@@ -17,6 +18,7 @@ RUN apt-get update \
 #RUN apt-get install -y \
 #	qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
 
+# Install and enable KVM
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	kvm qemu-kvm libvirt-bin bridge-utils libguestfs-tools
 
@@ -31,6 +33,7 @@ RUN adduser `id -un` kvm \
 #    && apt-get -y install oracle-java8-installer oracle-java8-set-default \
 #    && rm -rf /var/lib/apt/lists/*
 
+# Download Android SDK
 RUN wget -qO- http://dl.google.com/android/android-sdk_r23-linux.tgz | \
 	tar xvz -C /usr/local/ \
 	&& mv /usr/local/android-sdk-linux /usr/local/android-sdk \
@@ -45,6 +48,8 @@ ENV PATH $PATH:$ANDROID_HOME/platform-tools
 # Export JAVA_HOME variable
 #ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
+# Download Android SDK tools
+# TODO: can this process be simplified?
 RUN rm -rf ${ANDROID_HOME}/tools
 RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
 	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
