@@ -1,13 +1,15 @@
 version: '2'
 services:
-    vm:
-        image: vm:latest
-        build:
-           context: ./
-           dockerfile: Dockerfile
-        ports:
-          - 6080:80
-          - 5900:5900
-        # volumes:
-          # - ./avd:/app/avd
-          # - ./android-sdk-linux:/app/android-sdk-linux
+    vm: 
+      privileged: true
+      image: vm:latest
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      ports:
+        - 6080:80
+        - 5900:5900
+      volumes:
+        - avd:/root/.android/avd
+volumes:
+  avd:

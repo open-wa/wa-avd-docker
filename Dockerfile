@@ -6,12 +6,6 @@ WORKDIR /app
 
 COPY whatsapp.apk /app
 
-#ENV HTTP_PASSWORD=$SELENIUM_VNC_PASSWORD
-#ARG ANDROID_AVD_HOME=/app/avd
-#ENV ANDROID_AVD_HOME=${ANDROID_AVD_HOME}
-#ARG ANDROID_SDK_ROOT=${ANDROID_HOME}
-#ENV ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}
-
 RUN apt-get update \
 	&& apt-get install -y \
 	libgl1-mesa-dev \
@@ -19,6 +13,15 @@ RUN apt-get update \
 	unzip \
 	openjdk-8-jdk
 #	v4l2loopback
+
+#RUN apt-get install -y \
+#	qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	kvm qemu-kvm libvirt-bin bridge-utils libguestfs-tools
+
+RUN adduser `id -un` kvm \
+	&& newgrp kvm
 
 #RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections \
 #	&& echo "debconf shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
@@ -46,32 +49,15 @@ RUN rm -rf ${ANDROID_HOME}/tools
 RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P /app \
 	&& yes 'A' | unzip /app/sdk-tools-linux-4333796.zip -d ${ANDROID_HOME} \
 	&& yes | ${ANDROID_HOME}/tools/bin/sdkmanager \
-	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86" 
-	#&& ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86"
-#yes no | 
-#ADD post-build.sh .
-#RUN chmod +x ./post-build.sh
-#CMD ./post-build.sh
+	"build-tools;28.0.2" "sources;android-26" "platform-tools" "platforms;android-26" "system-images;android-26;google_apis;x86"
 
-#RUN tar -xvf android-sdk_r24.4.1-linux.tgz --directory /app
-#RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-#RUN unzip -d /app
+ADD entrypoint.sh /app
+RUN chmod +x /app/entrypoint.sh
+CMD /app/entrypoint.sh
 
-
-#COPY sdk-tools-linux-4333796.zip .
-#RUN rm -rf ${ANDROID_HOME}/tools/.
-#RUN if ! [ -d "${ANDROID_HOME}/tools" ]; then \
-#	wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip \
-#	&& unzip sdk-tools-linux-4333796.zip -d ${ANDROID_HOME}; fi
-
-#RUN ${ANDROID_HOME}/tools/android list sdk
-#RUN ${ANDROID_HOME}/tools/android update sdk -y --no-ui -t 2
-#RUN ${ANDROID_HOME}/tools/bin/sdkmanager --list
-
-#RUN echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86" \
-	#-p ${ANDROID_AVD_HOME} -c 2000M
-
-#RUN ${ANDROID_HOME}/tools/emulator @Pixel -no-accel
+#RUN ${ANDROID_HOME}/tools/emulator @Pixel -gpu off
+# -no-accel
+# -qemu -m 1024 -enable-kvm
 #-camera-back webcam1 -no-boot-anim -no-snapshot-load
 #RUN adb install /app/whatsapp.apk
 

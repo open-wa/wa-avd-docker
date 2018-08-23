@@ -4,3 +4,4 @@ android-sdk-linux/
 licenses/
 sdk-tools-linux-*
 tools_*
+deploy.sh
