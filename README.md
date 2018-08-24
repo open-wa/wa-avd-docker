@@ -13,6 +13,8 @@ Visit `localhost:6080`
 
 ## Start Android AVD
 
+Using Supervisord to manage the services, the Android AVD should start up automatically with WhatsApp pre-installed. If it doesn't then...:
+
 Run the following command
 
 `${ANDROID_HOME}/tools/emulator @Pixel -gpu off`
