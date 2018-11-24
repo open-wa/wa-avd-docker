@@ -21,6 +21,16 @@ Run the following command
 
 Using `emulator` throws an error described somewhere on SO... can't recall where, anyway the fix is to call from directory directly.
 
+**NOTE**
+
+At the moment the Docker entrypoint CMD/Supervisord isn't configuring the AVD. For now, to do it manually, run:
+
+`/app/entrypoint.sh`
+
+`/app/start-avd.sh`
+
+Please feel welcome to submit a pull-request to fix it!
+
 ## Further Development
 
 I'd like to stream a VNC feed via the `v4l2loopback` kernel module into the Android AVD... WIP. This would allow one to scan WhatsApp web barcodes remotely.
