@@ -11,6 +11,9 @@ The Dockerfile uses the following image as a base: [dorowu/ubuntu-desktop-lxde-v
 
 Visit `localhost:6080`
 
+* Default username: `root`
+* Default password: `secret`
+
 ## Start Android AVD
 
 Using Supervisord to manage the services, the Android AVD should start up automatically with WhatsApp pre-installed. If it doesn't then...:
