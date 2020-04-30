@@ -20,7 +20,6 @@ services:
         - 6080:80
         - 5900:5900
       volumes:
-        - avd:/root/.android/avd
         - ./snapshots:/app/snapshots
         - ./avd:/root/.android/avd
 volumes:
