@@ -21,6 +21,6 @@ fi
 export ANDROID_AVD_HOME=/root/.android/avd ANDROID_SDK_HOME=/root/.android HOME=/root DISPLAY=:1.0 \
     && xhost +local:docker \
     && xhost +local:root \
-    && rm $ANDROID_AVD_HOME/Pixel.avd/hardware-qemu.ini.lock \
+    && rm -f $ANDROID_AVD_HOME/Pixel.avd/hardware-qemu.ini.lock \
     && ${ANDROID_HOME}/tools/emulator @Pixel -gpu off -no-boot-anim -snapstorage /app/snapshots \
     && adb install /app/whatsapp.apk
