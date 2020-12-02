@@ -10,7 +10,7 @@ fi
 ${ANDROID_HOME}/tools/bin/avdmanager list avd | grep 'Pixel' &> /dev/null
 if ! [ $? == 0 ]; then
     echo "Creating Pixel AVD..."
-    ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86" -c 2000M | echo no \
+    echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -n Pixel -k "system-images;android-26;google_apis;x86" -c 2000M \
     && echo 'hw.keyboard=yes' >> /root/.android/avd/Pixel.avd/config.ini # enable hardware keyboard input
 else
     echo "Pixel AVD already exists"
