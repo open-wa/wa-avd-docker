@@ -1,5 +1,7 @@
 #!/bin/bash
-set -e
+
+#set -e
+export QTWEBENGINE_DISABLE_SANDBOX=1
 
 # Create the kvm node (required --privileged)
 if [ ! -e /dev/kvm ]; then

@@ -1,3 +1,4 @@
+export QTWEBENGINE_DISABLE_SANDBOX=1
 /usr/local/android-sdk/tools/emulator @Pixel -gpu off
 
 sleep 10 && adb shell pm list packages | grep whatsapp &> /dev/null
