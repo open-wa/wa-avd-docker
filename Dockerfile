@@ -9,7 +9,8 @@ RUN apt-get update \
 	libgl1-mesa-dev \
 	wget \
 	unzip \
-	openjdk-8-jdk
+	openjdk-8-jdk \
+	ffmpeg
 #	v4l2loopback
 
 # Install and enable KVM
@@ -42,9 +43,11 @@ RUN wget https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip -P
 COPY supervisord.conf /etc/supervisor/conf.d
 COPY whatsapp.apk /app
 COPY start-avd.sh /app
+COPY start-avd-with-cam.sh /app
 COPY avd.desktop /app
 
 RUN chmod +x /app/start-avd.sh
+RUN chmod +x /app/start-avd-with-cam.sh
 RUN chmod +x /app/avd.desktop
 
 # Create directory to save AVD snapshots

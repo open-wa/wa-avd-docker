@@ -32,6 +32,16 @@ At the moment the Docker entrypoint CMD/Supervisord isn't configuring the AVD. F
 
 `/app/start-avd.sh`
 
+In case you would like to start it with camera support (will take the screen from the VM as camera input):
+
+`/app/start-avd-with-cam.sh`
+
+After Android started, open your browser and open WhatsAppWeb or if you have the Matrix WhatsAppBridgeBot send login.
+This should delivever you the QR code, now open in WhatsApp under option the "WhatsAppWeb", move with the Firefox window with QR code that it fits in the camera field of whatsapp.
+Depending on camera position it helps to rotate your mobile phone with the emulator buttons to be able to catch the QR code.
+
+For more detail to bridge with matrix look here: https://matrix.org/docs/guides/whatsapp-bridging-mautrix-whatsapp 
+
 Please feel welcome to submit a pull-request to fix it!
 
 ## Further Development
